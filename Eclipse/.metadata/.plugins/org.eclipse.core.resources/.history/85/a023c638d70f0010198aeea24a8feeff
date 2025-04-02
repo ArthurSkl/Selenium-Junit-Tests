@@ -1,0 +1,15 @@
+import org.junit.Test;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class TesteCampoTreinamento {
+@Test
+public void teste() {
+	WebDriver driver = new FirefoxDriver();
+	driver.manage().window().setSize(new Dimension(800, 600));
+	driver.get("file:///C:/Users/coelh/Downloads/campo_treinamento/componentes.html");
+	//driver.quit();
+	
+}
+}

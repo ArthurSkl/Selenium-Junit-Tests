@@ -1,0 +1,14 @@
+import org.openqa.selenium.WebDriver;
+
+import net.sourceforge.htmlunit.corejs.javascript.tools.debugger.Main;
+
+public class TesteGoogle {
+	
+	public static void main(String[] args) {
+		System.setProperty("webdriver.gecko.diver","C:\\Users\\coelh\\Desktop\\java/geckodriver.exe");
+		WebDriver driver = new FirefoxDriver();
+		driver.get("http://www.google.com");
+		System.out.println(driver.getTitle());
+	}
+	
+}
