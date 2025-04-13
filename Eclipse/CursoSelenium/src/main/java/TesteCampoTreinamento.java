@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -90,8 +92,33 @@ public class TesteCampoTreinamento {
 				break;
 			}
 		}
-		Assert.assertTrue(encontrou);
-		driver.quit();
+			Assert.assertTrue(encontrou);
+			driver.quit();
+		}
 		
+		@Test 
+		public void deveVerificarValoresComboMultiplo() {
+			WebDriver driver = new FirefoxDriver();
+			driver.manage().window().setSize(new Dimension(600,400));
+			driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+			WebElement element = driver.findElement(By.id("elementosForm:esportes"));
+			Select combo = new Select(element);
+			combo.selectByVisibleText("Natacao");
+			combo.selectByVisibleText("Corrida");
+			combo.selectByVisibleText("O que eh esporte?");
+			
+			//para des selecionar seria esse comando = combo.deselectByVisibleText("Corrida");
+			
+			List<WebElement> allSelectedOpitions = combo.getAllSelectedOptions();
+			Assert.assertEquals(3, allSelectedOpitions.size());
+			
+			combo.deselectByVisibleText("Corrida");
+			
+			allSelectedOpitions = combo.getAllSelectedOptions();
+			Assert.assertEquals(2, allSelectedOpitions.size());
+			
+			driver.quit();
+		}
 	}
-}
+	
+
