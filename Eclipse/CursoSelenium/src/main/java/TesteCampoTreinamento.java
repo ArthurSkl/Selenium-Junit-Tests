@@ -154,18 +154,43 @@ public class TesteCampoTreinamento {
         driver.quit();
     }
     
-    @Test 
+    @Test
     public void deveinteragirComBotoes() {
+        // Cria uma instância do WebDriver usando o Firefox
         WebDriver driver = new FirefoxDriver();
-        driver.manage().window().setSize(new Dimension(600,400));
+        
+        // Define o tamanho da janela do navegador
+        driver.manage().window().setSize(new Dimension(600, 400));
+        
+        // Acessa uma página local (campo_treinamento/componentes.html)
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+        
+        // Localiza o botão com o id "buttonSimple" na página
         WebElement botao = driver.findElement(By.id("buttonSimple"));
+        
+        // Clica no botão
         botao.click();
+        
+        // Verifica se o atributo "value" do botão mudou para "Obrigado!"
         Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
-        driver.quit();       
         
-        
-        
-        
+        // Fecha o navegador
+        driver.quit();
     }
+    
+    @Test
+    public void deveinteragirComLinks() {
+    	WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(600, 400));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+        driver.findElement(By.linkText("Voltar")).click();
+    			
+    	
+    	
+    	
+    	
+    	
+    	
+    }
+
 }
