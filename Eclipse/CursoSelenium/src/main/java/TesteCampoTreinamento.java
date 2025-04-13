@@ -153,4 +153,19 @@ public class TesteCampoTreinamento {
 
         driver.quit();
     }
+    
+    @Test 
+    public void deveinteragirComBotoes() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(600,400));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+        WebElement botao = driver.findElement(By.id("buttonSimple"));
+        botao.click();
+        Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
+        driver.quit();       
+        
+        
+        
+        
+    }
 }

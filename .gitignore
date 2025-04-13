@@ -52,3 +52,6 @@ surefire-reports/
 
 # Arquivos de configuração específicos
 workbench.xmi
+/Eclipse/.metadata
+/Eclipse/.metadata
+/Eclipse/.metadata
