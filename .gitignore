@@ -1,1 +1,54 @@
-/Eclipse/.metadata
+
+# Eclipse
+.metadata/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.localhistory/
+.loadpath
+.recommenders/
+.project
+.classpath
+.settings/
+
+# Build
+bin/
+build/
+target/
+out/
+
+# Maven
+log/
+logs/
+*.log
+.mvn/timing.properties
+!**/src/main/**/log/
+!**/src/test/**/log/
+
+# Gradle
+.gradle/
+build/
+
+# IntelliJ (caso alguém use também)
+.idea/
+*.iml
+*.iws
+out/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente/IDE
+*.class
+*.jar
+*.war
+*.ear
+
+# Arquivos de teste temporários
+test-output/
+surefire-reports/
+
+# Arquivos de configuração específicos
+workbench.xmi
