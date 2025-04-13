@@ -1,9 +1,14 @@
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.WebElement;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TesteCampoTreinamento {
@@ -52,5 +57,41 @@ public class TesteCampoTreinamento {
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:2")).isSelected());
 		
 		driver.quit();
+	}
+	
+	@Test 
+	public void deveInteragirComCombo() {
+		WebDriver driver = new FirefoxDriver();
+		driver.manage().window().setSize(new Dimension(600,400));
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
+		Select combo = new Select(element);
+		//combo.selectByIndex(2);
+		//combo.selectByValue("superior");
+		combo.selectByVisibleText("2o grau completo");
+		Assert.assertEquals("2o grau completo", combo.getFirstSelectedOption().getText());
+		driver.quit();
+		
+	}
+	@Test 
+	public void deveVerificarValoresCombo() {
+		WebDriver driver = new FirefoxDriver();
+		driver.manage().window().setSize(new Dimension(600,400));
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
+		Select combo = new Select(element);
+		List<WebElement> options = combo.getOptions();
+		Assert.assertEquals(8, options.size());
+		
+		boolean encontrou = false;
+		for(WebElement option: options) {
+			if(option.getText().equals("Mestrado")) {
+				encontrou = true;
+				break;
+			}
+		}
+		Assert.assertTrue(encontrou);
+		driver.quit();
+		
 	}
 }
