@@ -181,10 +181,10 @@ public class TesteCampoTreinamento {
     @Test
     public void deveinteragirComLinks() {
     	WebDriver driver = new FirefoxDriver();
-        driver.manage().window().setSize(new Dimension(600, 400));
+        //driver.manage().window().setSize(new Dimension(600, 400));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
-        driver.findElement(By.linkText("Voltar")).click();
-    			
+        WebElement link = driver.findElement(By.id("linkvoltar"));
+        link.click();    			
     	
     	
     	
