@@ -1,5 +1,3 @@
-// Importa o método estático assertEquals da biblioteca JUnit para realizar asserções
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // Importa classes necessárias do Java para manipulação de listas
 import java.util.List;
@@ -184,13 +182,28 @@ public class TesteCampoTreinamento {
         //driver.manage().window().setSize(new Dimension(600, 400));
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
         WebElement link = driver.findElement(By.id("linkvoltar"));
-        link.click();    			
+        link.click();
+        Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
+    	driver.quit();
     	
-    	
-    	
-    	
-    	
-    	
+    	 	
     }
-
+    
+    @Test
+    public void deveBuscarTextosNaPagina() {
+    	WebDriver driver = new FirefoxDriver();
+        //driver.manage().window().setSize(new Dimension(600, 400));
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
+        
+        
+        Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
+        //Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
+        
+        Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", driver.findElement(By.className("facilAchar")).getText());
+        
+        driver.quit();
+    }
+    
+    
+    
 }
