@@ -10,7 +10,8 @@ import org.junit.Test;             // @Test: marca métodos como casos de teste
 // Selenium WebDriver e suporte a interações na página
 import org.openqa.selenium.Alert;          // Alert: manipula diálogos JavaScript
 import org.openqa.selenium.By;             // By: localiza elementos na página
-import org.openqa.selenium.WebDriver;      // WebDriver: interface principal do Selenium    // WebElement: representa elementos HTML
+import org.openqa.selenium.WebDriver;      // WebDriver: interface principal do Selenium
+import org.openqa.selenium.WebElement;     // WebElement: representa elementos HTML
 import org.openqa.selenium.firefox.FirefoxDriver; // FirefoxDriver: implementa WebDriver para Firefox
 import org.openqa.selenium.support.ui.Select;      // Select: facilita interação com <select>
 import org.openqa.selenium.support.ui.WebDriverWait; // WebDriverWait: espera explícita por condições
@@ -18,9 +19,6 @@ import org.openqa.selenium.support.ui.WebDriverWait; // WebDriverWait: espera ex
 public class Testecadastro {
     // Variável que controla o navegador
     private WebDriver driver;
-    
-    
-    private DSL dsl;
     @Before
     public void inicializa() {
         // Cria instância do FirefoxDriver e abre o navegador
@@ -28,7 +26,6 @@ public class Testecadastro {
         new WebDriverWait(driver, Duration.ofSeconds(5));
         // Carrega a página local de teste usando URL de arquivo
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/campo_treinamento/componentes.html");
-        dsl = new DSL(driver);
     }
 
     @After
@@ -40,37 +37,54 @@ public class Testecadastro {
     @Test
     public void deveRealizarCadastroComSucesso() {
         // Preenche o campo de nome com texto
-    	dsl.escreve("elementosForm:nome", "Arthur Augusto");
+        driver.findElement(By.id("elementosForm:nome")).sendKeys("Arthur Augusto");
         // Preenche o campo de sobrenome
-    	dsl.escreve("elementosForm:sobrenome","Coelho Frantz");
+        driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Coelho Frantz");
         // Seleciona o rádio de sexo masculino (índice 0)
-        dsl.clicarRadio("elementosForm:sexo:0");
+        driver.findElement(By.id("elementosForm:sexo:0")).click();
         // Seleciona o checkbox de comida favorita (pizza, índice 2)
-        dsl.clicarRadio("elementosForm:comidaFavorita:2");
+        driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
         // Localiza o elemento <select> de escolaridade
-        dsl.selecionarCombo("elementosForm:escolaridade","Mestrado");
-        dsl.selecionarCombo("elementosForm:esportes", "Natacao");
-        dsl.clicarBotao("elementosForm:cadastrar");
-       
-      
+        WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
+        // Cria objeto Select para interagir com o combo
+        Select combo = new Select(element);
+        // Seleciona a opção "Superior"
+        combo.selectByVisibleText("Superior");
+        // Localiza o <select> de esportes
+        WebElement esportes = driver.findElement(By.id("elementosForm:esportes"));
+        // Cria segundo objeto Select para múltiplas seleções
+        Select combo2 = new Select(esportes);
+        // Seleciona a opção "O que eh esporte?"
+        combo2.selectByVisibleText("O que eh esporte?");
+        // Preenche a textarea de sugestões
+        driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("Sem nem uma sugestão");
+        // Clica no botão Cadastrar para submeter o formulário
+        driver.findElement(By.id("elementosForm:cadastrar")).click();
         
         // Verifica se a mensagem de sucesso começa com "Cadastrado!"
-        Assert.assertTrue(dsl.obterTexto("resultado").startsWith("Cadastrado!"));
+        Assert.assertTrue(driver.findElement(By.id("resultado")).getText()
+                          .startsWith("Cadastrado!"));
         // Verifica se o campo Nome foi registrado corretamente
-        Assert.assertTrue(dsl.obterTexto("descNome").endsWith("Arthur Augusto"));
+        Assert.assertTrue(driver.findElement(By.id("descNome")).getText()
+                          .endsWith("Arthur Augusto"));
         // Verifica o sobrenome exato
-        Assert.assertEquals("Sobrenome: Coelho Frantz",dsl.obterTexto("descSobrenome"));
+        Assert.assertEquals("Sobrenome: Coelho Frantz", 
+                            driver.findElement(By.id("descSobrenome")).getText());
         // Verifica indicação de sexo
-        Assert.assertEquals("Sexo: Masculino",dsl.obterTexto("descSexo"));
+        Assert.assertEquals("Sexo: Masculino", 
+                            driver.findElement(By.id("descSexo")).getText());
         // Verifica a comida favorita exibida
         Assert.assertEquals("Comida: Pizza", 
-        		dsl.obterTexto("descComida"));
+                            driver.findElement(By.id("descComida")).getText());
         // Verifica a escolaridade exibida (valor em lowercase conforme HTML)
-        Assert.assertEquals("Escolaridade: superior",dsl.obterTexto("descEscolaridade"));
+        Assert.assertEquals("Escolaridade: superior", 
+                            driver.findElement(By.id("descEscolaridade")).getText());
         // Verifica esporte selecionado
-        Assert.assertEquals("Esportes: O que eh esporte?",dsl.obterTexto("descEsportes"));
+        Assert.assertEquals("Esportes: O que eh esporte?", 
+                            driver.findElement(By.id("descEsportes")).getText());
         // Verifica sugestões apresentadas
-        Assert.assertEquals("Sugestoes: Sem nem uma sugestão",dsl.obterTexto("descSugestoes"));
+        Assert.assertEquals("Sugestoes: Sem nem uma sugestão", 
+                            driver.findElement(By.id("descSugestoes")).getText());
     }
 
     @Test
